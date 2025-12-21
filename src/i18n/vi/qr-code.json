@@ -1,0 +1,16 @@
+{
+  "overNumberCodeInMonth": "Vượt số lượng mã được tạo trong tháng",
+  "fileNotDownloaded": "chưa thể tải file",
+  "systemConflict": "Không thể xoá/cập nhật vì có mã code",
+  "unBLockScanCodeDupConflict": "Không thể chỉnh sửa vì đã quét thành công",
+  "scan": {
+    "invalidCode": "Mã không đúng định dạng",
+    "usedCode": "Mã đã được sử dụng",
+    "expiredCode": "Mã đã hết hạn",
+    "blockedScan": "Tài khoản đã bị chặn quét mã",
+    "overScanSuccessInDay": "Bạn đã vượt giới hạn quét mã thành công {limit} lần trong ngày. Vui lòng thử lại vào ngày mai!",
+    "overScanFailedInDay": "Bạn đã quét mã sai liên tiếp quá {limit} lần trong ngày. Vui lòng thử lại vào ngày mai!",
+    "blockScanQrCode": "Tài khoản đã bị chặn quét mã! Vui lòng liên hệ với quản trị viên để được hỗ trợ.",
+    "blockAccount": "Tài khoản đã bị chặn! Vui lòng liên hệ với quản trị viên để được hỗ trợ."
+  }
+}

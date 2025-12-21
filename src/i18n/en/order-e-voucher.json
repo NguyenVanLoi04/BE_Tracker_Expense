@@ -1,0 +1,20 @@
+{
+  "eVoucherIsUsed": "E-Voucher đã được sử dụng",
+  "eVoucherIsExpired": "E-Voucher đã hết hạn",
+  "eVoucherIsBlocked": "E-Voucher đã bị chặn",
+  "eVoucherIsFailed": "E-Voucher sử dụng thất bại. Vui lòng liên hệ Admin để được hỗ trợ.",
+  "eVoucherIsFailedManyTimes": "Bạn đã sử dụng quá nhiều lần. Vui lòng thử lại sau 24h.",
+  "eVoucherNotFound": "E-Voucher không tồn tại",
+  "eVoucherIsNotValid": "E-Voucher không hợp lệ",
+  "eVoucherIsNotValidTelecom": "Nhà mạng không hợp lệ",
+  "topup": {
+    "error": "Lỗi khi nạp thẻ.",
+    "transactionFailed": "Nạp thẻ thất bại. Vui lòng thử lại.",
+    "transactionTimeout": "Nạp thẻ thất bại. Vui lòng thử lại sau 24h."
+  },
+  "pinCode": {
+    "error": "Lỗi khi lấy mã thẻ.",
+    "transactionFailed": "Lấy mã thẻ thất bại. Vui lòng thử lại.",
+    "transactionTimeout": "Lấy mã thẻ thất bại. Vui lòng thử lại sau 24h."
+  }
+}

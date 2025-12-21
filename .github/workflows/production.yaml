@@ -1,0 +1,93 @@
+name: production
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Checkout the code
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # Set up Docker
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
+
+    # Build Docker image
+    - name: Build Docker Image
+      run: |
+        docker build -t mandala-be-prod .
+
+    # Save Docker image as a tar file
+    - name: Save Docker Image
+      run: |
+        docker save mandala-be-prod > mandala-be-prod.tar
+
+    # Transfer Docker image to VPS
+    - name: Transfer Docker Image to VPS
+      uses: appleboy/scp-action@v0.1.7
+      with:
+        host: ${{ secrets.VPS_IP_PROD }}
+        username: ${{ secrets.VPS_USER_PROD }}
+        key: ${{ secrets.VPS_KEY_PROD }}
+        source: mandala-be-prod.tar
+        target: ~/mandala/registries
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+    # SSH into VPS and Deploy
+    - name: SSH into VPS and Deploy
+      uses: appleboy/ssh-action@v1.2.0
+      with:
+        host: ${{ secrets.VPS_IP_PROD }}
+        username: ${{ secrets.VPS_USER_PROD }}
+        key: ${{ secrets.VPS_KEY_PROD }}
+        script: |
+          # Load the Docker image
+          docker load < ~/mandala/registries/mandala-be-prod.tar
+
+          # Stop and remove any existing container
+          docker stop mandala-be-prod || true
+          docker stop mandala-be-worker-prod || true
+          docker rm mandala-be-prod || true
+          docker rm mandala-be-worker-prod || true
+
+          # Create the named volume if it doesn’t exist
+          docker volume create mandala-prod-data || true
+
+          # Create the named network if it doesn’t exist
+          docker network create mandala-prod-network || true
+
+          # Start a temporary container to run migrations
+          docker run --rm \
+            --env-file ~/mandala/env-configs/.prod.env \
+            --network mandala-prod-network \
+            -v mandala-prod-data:/var/lib/mandala \
+            mandala-be-prod \
+            npm run typeorm migration:run -- -d ./data-source.ts
+
+          # Run backend container
+          docker run -p 5000:5000 \
+            --env-file ~/mandala/env-configs/.prod.env \
+            --name mandala-be-prod \
+            --restart always \
+            --network mandala-prod-network \
+            -v mandala-prod-data:/var/lib/mandala \
+            -d mandala-be-prod npm run start:prod
+
+          # Run worker container
+          docker run -p 5001:5001 \
+            --env-file ~/mandala/env-configs/.prod.env \
+            --name mandala-be-worker-prod \
+            --restart always \
+            --network mandala-prod-network \
+            -v mandala-prod-data:/var/lib/mandala \
+            -d mandala-be-prod npm run start:worker

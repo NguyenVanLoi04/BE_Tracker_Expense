@@ -1,0 +1,9 @@
+{
+  "common": {
+    "notiNotFound": "Noti not found",
+    "deleteMultipleError": "Delete multiple error",
+    "featureIsTurnOff": "Notification Feature is turn off"
+  },
+  "canNotDeleteNotiSent": "Không thể xoá thông báo đã gửi",
+  "canNotDeleteSaleForceNoti": "Không thể xoá thông báo sale force"
+}

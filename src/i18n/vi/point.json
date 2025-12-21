@@ -1,0 +1,12 @@
+{
+  "addPoint": {
+    "invalidCode": "Mã không đúng định dạng",
+    "usedCode": "Mã đã được sử dụng",
+    "expiredCode": "Mã đã hết hạn",
+    "blockedUser": "Tài khoản đã bị chặn",
+    "blockedScanQrCode": "Tài khoản đã bị chặn quét mã",
+    "overAddPointInDay": "Bạn đã quá lượt quét mã trong ngày"
+  },
+  "featureIsTurnOff": "Tính năng tích điểm này bị đóng",
+  "notEnoughPoint": "Không đủ điểm"
+}

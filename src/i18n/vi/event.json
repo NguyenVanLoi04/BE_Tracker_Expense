@@ -1,0 +1,11 @@
+{
+  "invalidEventGift": "Quà sự kiện không hợp lệ, hãy chắc chắn tổng tỉ lệ trúng giải là 100% và trùng gift_id",
+  "deleteMultipleError": "Xoá nhiều sự kiện thất bại",
+  "notFound": "Không tìm thấy sự kiện",
+  "giftNotFound": "Không tìm thấy quà",
+  "invalidSystemConfigPoint": "System config point không hợp lệ",
+  "overRewardLimit": "Sự kiện đã hết quà. Vui lòng quay lại sau bạn nhé!",
+  "overRewardLimitPerUser": "Bạn đã đạt giới hạn nhận quà từ sự kiện này rồi. Vui lòng tham gia sự kiện khác bạn nhé!",
+  "overSelectLimitPerUser": "Số lần chọn quà đã đạt đến giới hạn.",
+  "invalidData": "Dữ liệu sự kiện không hợp lệ"
+}

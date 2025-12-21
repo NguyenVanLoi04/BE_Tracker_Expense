@@ -1,0 +1,11 @@
+{
+  "pinCode": {
+    "getSoftPinError": "Lỗi khi lấy mã thẻ.",
+    "checkSoftPinError": "Lỗi khi kiểm tra mã thẻ.",
+    "getTransactionResultError": "Lỗi khi lấy kết quả mã thẻ."
+  },
+  "topup": {
+    "error": "Lỗi khi nạp thẻ.",
+    "getTopupResultError": "Lỗi khi lấy kết quả thẻ."
+  }
+}
