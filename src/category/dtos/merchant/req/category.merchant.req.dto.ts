@@ -1,4 +1,4 @@
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 import {
   IsValidArrayNumber,
   IsValidBoolean,
@@ -14,15 +14,18 @@ import {
 } from '../../../enums/category.enum';
 
 export class CreateCategoryReqDto {
+  @ApiProperty({ example: 'name' })
   @IsValidText({ maxLength: 255 })
   name: string;
 
-  @IsValidNumber()
+  @ApiProperty({ example: 0 })
   priority: number;
 
+  @ApiProperty({ example: false })
   @IsValidBoolean()
   isDefault: boolean;
 
+  @ApiProperty({ example: CategoryStatus.ACTIVE })
   @IsValidEnum({
     enum: CategoryStatus,
   })
@@ -32,6 +35,8 @@ export class CreateCategoryReqDto {
 export class UpdateCategoryMerchantReqDto extends PartialType(
   CreateCategoryReqDto,
 ) {
+  @ApiProperty({ example: 'id' })
+  @IsValidNumber()
   id: number;
 }
 
@@ -63,4 +68,49 @@ export class GetListCategoryMerchantReqDto extends PaginationReqDto {
     required: false,
   })
   sortType?: SortType;
+}
+
+export class GetListCategoryAdminReqDto extends PaginationReqDto {
+  @IsValidText({
+    required: false,
+  })
+  name?: string;
+
+  @IsValidEnum({
+    enum: CategoryStatus,
+    required: false,
+  })
+  status?: CategoryStatus;
+}
+
+export class CreateCategoryAdminReqDto {
+  @ApiProperty()
+  @IsValidText({ required: true, maxLength: 255 })
+  name: string;
+
+  @ApiProperty()
+  @IsValidEnum({
+    enum: CategoryStatus,
+    required: true,
+  })
+  status: CategoryStatus;
+
+  @ApiProperty()
+  @IsValidNumber({
+    required: false,
+  })
+  priority: number;
+
+  @ApiProperty()
+  @IsValidBoolean({
+    required: false,
+    default: false,
+  })
+  isDefault: boolean;
+
+  @ApiProperty()
+  @IsValidNumber({
+    required: true,
+  })
+  userId: number;
 }

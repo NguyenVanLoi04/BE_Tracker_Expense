@@ -12,57 +12,51 @@ import {
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { PrefixType } from '../../../common/constants/global.constant';
 import {
+  CreateCategoryAdminReqDto,
   CreateCategoryReqDto,
   DeleteCategoriesMerchantReqDto,
+  GetListCategoryAdminReqDto,
   GetListCategoryMerchantReqDto,
   UpdateCategoryMerchantReqDto,
 } from '../../dtos/merchant/req/category.merchant.req.dto';
-import { CategoryMerchantService } from '../../services/merchant/category.merchant.service';
+import { CategoryAdminService } from '../../services/merchant/category.merchant.service';
 import { CurrentUser } from '../../../common/decorators/curent.user.decorator';
+import { UserDto } from '../../../auth/dtos/dto';
 
 @Controller(`${PrefixType.ADMIN}/categories`)
 @ApiTags('Category Admin')
 export class CategoryMerchantController {
-  constructor(
-    private readonly categoryMerchantService: CategoryMerchantService,
-  ) {}
+  constructor(private readonly categoryAdminService: CategoryAdminService) {}
 
-  @ApiBearerAuth('access-token')
   @Get()
-  getList(
-    @CurrentUser() id: number,
-    @Query() dto: GetListCategoryMerchantReqDto,
-  ) {
-    console.log('dto ::::::::::::', dto);
-    console.log('id ::::::::::::', id);
-    return this.categoryMerchantService.getListCategory();
+  getList(@CurrentUser() id: number, @Query() dto: GetListCategoryAdminReqDto) {
+    return this.categoryAdminService.getListCategoryByAdmin(dto);
   }
 
   @Get(':id')
-  getById(@Param('id', ParseIntPipe) id: number) {
-    return;
+  getCategoryByIdWithAdmin(@Param('id', ParseIntPipe) id: number) {
+    return this.categoryAdminService.getCategoryById(id);
   }
 
   @Post()
-  create(@Body() dto: CreateCategoryReqDto) {
-    return;
+  createCategoryWithAdmin(
+    @Body() dto: CreateCategoryAdminReqDto,
+    @CurrentUser() user: UserDto,
+  ) {
+    return this.categoryAdminService.createCategoryByAdmin(user, dto);
   }
 
   @Patch(':id')
-  update(
+  updateCategoryWithAdmin(
     @Param('id', ParseIntPipe) id: number,
-    @Body() dto: UpdateCategoryMerchantReqDto,
+    @Body() dto: CreateCategoryAdminReqDto,
+    @CurrentUser() user: UserDto,
   ) {
-    return;
+    return this.categoryAdminService.updateCategoryByAdmin(id, user, dto);
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseIntPipe) id: number) {
-    return;
-  }
-
-  @Delete()
-  deleteMultiple(@Body() dto: DeleteCategoriesMerchantReqDto) {
-    return;
+  deleteCategoryWithAdmin(@Param('id', ParseIntPipe) id: number) {
+    return this.categoryAdminService.deleteCategoryById(id);
   }
 }

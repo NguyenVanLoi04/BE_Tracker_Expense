@@ -1,0 +1,4 @@
+export enum EXPENSE_TYPE {
+  INCOME = 'INCOME',
+  EXPENSE = 'EXPENSE',
+}

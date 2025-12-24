@@ -25,6 +25,7 @@ import { UtilsModule } from './utils/utils.module';
 import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
+import { TransactionModule } from './transaction/transaction.module';
 
 @Module({
   imports: [
@@ -67,6 +68,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
     CategoryModule,
     UserModule,
     AuthModule,
+    TransactionModule,
   ],
   controllers: [AppController],
   providers: [

@@ -19,7 +19,7 @@ export class Category extends BaseEntity {
   @Column({ length: 255 })
   name: string;
 
-  @Column({ default: 0 })
+  @Column({ nullable: true })
   priority: number;
 
   @Column({

@@ -30,7 +30,7 @@ export class CategoryCustomerService {
       .createQueryBuilder('category')
       .where('category.user_id = :userId', { userId })
       .andWhere('category.status = :status', { status: CategoryStatus.ACTIVE })
-      .getRawOne();
+      .getMany();
 
     return category;
   }
@@ -49,7 +49,7 @@ export class CategoryCustomerService {
     const category = this.categoryRepo.create({
       name,
       priority,
-      isDefault,
+      isDefault: false,
       status,
       user: userFound,
     });
@@ -58,11 +58,11 @@ export class CategoryCustomerService {
   }
 
   async updateCategoryByCustomer(
+    id: number,
     user: UserDto,
     dto: UpdateCategoryMerchantReqDto,
   ) {
     const { userId } = user;
-    const { id, name, priority, isDefault, status } = dto;
 
     const categoryFound = await this.categoryRepo
       .createQueryBuilder('category')

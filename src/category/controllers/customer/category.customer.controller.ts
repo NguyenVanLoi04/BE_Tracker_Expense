@@ -1,10 +1,21 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  Put,
+} from '@nestjs/common';
 import { PrefixType } from '../../../common/constants/global.constant';
 import { CurrentUser } from '../../../common/decorators/curent.user.decorator';
 import { UserDto } from '../../../auth/dtos/dto';
 import { CategoryCustomerService } from '../../services/customer/category.customer.service';
 import { ApiTags } from '@nestjs/swagger';
-import { CreateCategoryReqDto } from '../../dtos/merchant/req/category.merchant.req.dto';
+import {
+  CreateCategoryReqDto,
+  UpdateCategoryMerchantReqDto,
+} from '../../dtos/merchant/req/category.merchant.req.dto';
 @Controller(`${PrefixType.CUSTOMER}/category`)
 @ApiTags('Category Customer')
 export class CategoryCustomerController {
@@ -21,5 +32,16 @@ export class CategoryCustomerController {
   createCategoryByCustomer(
     @CurrentUser() user: UserDto,
     @Body() dto: CreateCategoryReqDto,
-  ) {}
+  ) {
+    return this.CategoryCustomerService.createCategoryByCustomer(user, dto);
+  }
+
+  @Put(':id')
+  updateCategoryByCustomer(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: UserDto,
+    @Body() dto: UpdateCategoryMerchantReqDto,
+  ) {
+    return this.CategoryCustomerService.updateCategoryByCustomer(id, user, dto);
+  }
 }
