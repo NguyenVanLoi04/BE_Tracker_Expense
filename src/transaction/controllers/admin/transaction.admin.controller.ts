@@ -3,8 +3,10 @@ import { ApiTags } from '@nestjs/swagger';
 import { PrefixType } from '../../../common/constants/global.constant';
 import { TransactionAdminService } from '../../services/admin/transaction.admin.service';
 import { GetListTransactionDto } from '../../dtos/dto';
+import { Admin } from '../../../common/decorators/admin.decorator';
 
 @Controller(`${PrefixType.ADMIN}/transactions`)
+@Admin()
 @ApiTags('Admin transaction')
 export class TransactionAdminController {
   constructor(

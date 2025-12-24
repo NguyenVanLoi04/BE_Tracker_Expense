@@ -13,8 +13,10 @@ import { PrefixType } from '../../../common/constants/global.constant';
 import { UserAdminService } from '../../services/admin/user.admin.service';
 import { GetListUserDto } from '../../dtos/dto';
 import { Public } from '../../../common/decorators/public.decorator';
+import { Admin } from '../../../common/decorators/admin.decorator';
 
 @Controller(`${PrefixType.ADMIN}/users`)
+@Admin()
 @ApiTags('User Admin')
 export class UserAdminController {
   constructor(private readonly userAdminService: UserAdminService) {}

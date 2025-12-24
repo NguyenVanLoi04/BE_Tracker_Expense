@@ -31,6 +31,9 @@ export class User extends BaseEntity {
   @Column({ default: false })
   isBlock: boolean;
 
+  @Column({ default: false })
+  isAdmin: boolean;
+
   // 1 User có nhiều Transaction
   @OneToMany(() => Transaction, (transaction) => transaction.user)
   transactions: Transaction[];

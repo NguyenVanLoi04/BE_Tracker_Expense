@@ -22,8 +22,10 @@ import {
 import { CategoryAdminService } from '../../services/merchant/category.merchant.service';
 import { CurrentUser } from '../../../common/decorators/curent.user.decorator';
 import { UserDto } from '../../../auth/dtos/dto';
+import { Admin } from '../../../common/decorators/admin.decorator';
 
 @Controller(`${PrefixType.ADMIN}/categories`)
+@Admin()
 @ApiTags('Category Admin')
 export class CategoryMerchantController {
   constructor(private readonly categoryAdminService: CategoryAdminService) {}
