@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -43,5 +44,13 @@ export class CategoryCustomerController {
     @Body() dto: UpdateCategoryMerchantReqDto,
   ) {
     return this.CategoryCustomerService.updateCategoryByCustomer(id, user, dto);
+  }
+
+  @Delete(':id')
+  deleteCategoryByCustomer(
+    @Param('id', ParseIntPipe) id: number,
+    @CurrentUser() user: UserDto,
+  ) {
+    return this.CategoryCustomerService.deleteCategoryByCustomer(id, user);
   }
 }

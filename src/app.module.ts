@@ -41,7 +41,7 @@ import { TransactionModule } from './transaction/transaction.module';
       useFactory: () => ({}),
       dataSourceFactory: async () => {
         try {
-          initializeTransactionalContext();
+          
           const ds = addTransactionalDataSource(dataSource);
           console.log('✅ Database connected successfully');
           return ds;

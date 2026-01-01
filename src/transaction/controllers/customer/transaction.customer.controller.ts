@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   ParseIntPipe,
@@ -41,6 +42,11 @@ export class TransactionCustomerController {
     );
   }
 
+  @Get('summary')
+  summaryTransactionByUserInTime(@CurrentUser() user: UserDto) {
+    return this.transactionCustomerService.summaryTransactionByUserInTime(user);
+  }
+
   @Post()
   createTransaction(
     @CurrentUser() user: UserDto,
@@ -56,5 +62,13 @@ export class TransactionCustomerController {
     @Body() dto: CreateTransactionDto,
   ) {
     return this.transactionCustomerService.updateTransactionById(id, user, dto);
+  }
+
+  @Delete(':id')
+  deleteTransactionById(
+    @CurrentUser() user: UserDto,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
+    return this.transactionCustomerService.deleteTransactionById(id, user);
   }
 }

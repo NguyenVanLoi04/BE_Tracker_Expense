@@ -1,9 +1,20 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
 
 export class LoginDto {
-  @ApiProperty({ example: 'john_doe', description: 'Tên đăng nhập của user' })
+  @ApiProperty({
+    example: 'john_doe',
+    description: 'Tên đăng nhập của user',
+    required: true,
+  })
+  @IsNotEmpty()
   userName: string;
-  @ApiProperty({ example: 'john_doe', description: 'Tên đăng nhập của user' })
+  @IsNotEmpty()
+  @ApiProperty({
+    example: 'john_doe',
+    description: 'Tên đăng nhập của user',
+    required: true,
+  })
   passWord: string;
 }
 

@@ -169,7 +169,35 @@ export class TransactionCustomerService {
     return 0;
   }
 
-  async statiscalyTransactionByUserInTime() {
-    return 0;
+  async summaryTransactionByUserInTime(user: UserDto) {
+    const now = dayjs();
+    const startOfMonth = now.startOf('month');
+    const endOfMonth = now.endOf('month');
+
+    const { userId } = user;
+
+    const result = await this.transactionRepo
+      .createQueryBuilder('transaction')
+      .leftJoin('transaction.category', 'category')
+      .where('transaction.user_id = :userId', { userId })
+      .andWhere('transaction.deletedAt IS NULL')
+      .andWhere('transaction.type = :type', { type: TransactionType.EXPENSE })
+      .select('category.name', 'categoryName')
+      .addSelect('SUM(transaction.amount)', 'totalAmount')
+      .andWhere('transaction.createdAt BETWEEN :startOfMonth AND :endOfMonth', {
+        startOfMonth,
+        endOfMonth,
+      })
+      .groupBy('category.name')
+      .getRawMany();
+
+    const summary = result.map((item) => {
+      return {
+        categoryName: item.categoryName,
+        totalAmount: item.totalAmount,
+      };
+    });
+
+    return summary;
   }
 }
