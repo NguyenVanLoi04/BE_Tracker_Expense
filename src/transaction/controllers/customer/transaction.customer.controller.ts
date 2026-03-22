@@ -7,13 +7,14 @@ import {
   ParseIntPipe,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PrefixType } from '../../../common/constants/global.constant';
 import { TransactionCustomerService } from '../../services/customer/transaction.customer.service';
 import { CurrentUser } from '../../../common/decorators/curent.user.decorator';
 import { UserDto } from '../../../auth/dtos/dto';
-import { CreateTransactionDto } from '../../dtos/dto';
+import { CreateTransactionDto, GetListTransactionDto } from '../../dtos/dto';
 
 @Controller(`${PrefixType.CUSTOMER}/transactions`)
 @ApiTags('Customer transaction')
@@ -23,8 +24,22 @@ export class TransactionCustomerController {
   ) {}
 
   @Get()
-  getListTransaction(@CurrentUser() user: UserDto) {
-    return this.transactionCustomerService.getListTransactionByUser(user);
+  getListTransaction(
+    @CurrentUser() user: UserDto,
+    @Query() query: GetListTransactionDto,
+  ) {
+    return this.transactionCustomerService.getListTransactionByUser(
+      user,
+      query,
+    );
+  }
+
+  @Get('history')
+  getTransactionHistory(
+    @CurrentUser() user: UserDto,
+    @Query() query: GetListTransactionDto,
+  ) {
+    return this.transactionCustomerService.getTransactionHistory(user, query);
   }
 
   @Get(':id')

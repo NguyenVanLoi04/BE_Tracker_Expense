@@ -7,19 +7,21 @@ require('dotenv').config();
 
 let config: DataSourceOptions & PostgresConnectionOptions = {
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: +process.env.DB_PORT,
-  username: process.env.DB_USERNAME,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+  // Ưu tiên dùng DATABASE_URL nếu có (Railway), nếu không sẽ fallback về config cũ (Local)
+  url: process.env.DATABASE_URL || undefined,
+  host: process.env.DATABASE_URL ? undefined : process.env.DB_HOST,
+  port: process.env.DATABASE_URL ? undefined : +process.env.DB_PORT,
+  username: process.env.DATABASE_URL ? undefined : process.env.DB_USERNAME,
+  password: process.env.DATABASE_URL ? undefined : process.env.DB_PASSWORD,
+  database: process.env.DATABASE_URL ? undefined : process.env.DB_DATABASE,
+
+  // Cấu hình SSL bắt buộc cho các dịch vụ Cloud Database như Railway/Render/Neon
+  ssl: process.env.DATABASE_URL ? { rejectUnauthorized: false } : false,
+
   synchronize: false,
   entities: [__dirname + '/src/**/*.entity{.ts,.js}'],
-  //  migrations cùng cấp với src
   migrations: [__dirname + '/migrations/*{.ts,.js}'],
   logger: 'simple-console',
-  // extra: {
-  //   options: '-c lock_timeout=60000ms',
-  // },
   logging: boolean(process.env.SHOW_SQL),
   migrationsTransactionMode: 'each',
   namingStrategy: new NamingStrategy(),
@@ -72,8 +74,8 @@ switch (process.env.NODE_ENV) {
   default:
     config = {
       ...config,
-      synchronize: false,
-      migrationsRun: true,
+      synchronize: true,
+      migrationsRun: false,
       logging: boolean(process.env.SHOW_SQL),
     };
     break;

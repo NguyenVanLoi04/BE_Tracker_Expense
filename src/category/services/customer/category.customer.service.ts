@@ -26,20 +26,25 @@ export class CategoryCustomerService {
   async getCategoryCreatedByCustomer(user: UserDto) {
     const { userId } = user;
 
-    const categoryDefault = await this.categoryRepo
-      .createQueryBuilder('category')
-      .where('category.deletedAt IS NULL')
-      .andWhere('category.isDefault = :isDefault', { isDefault: true })
-      .andWhere('category.status = :status', { status: CategoryStatus.ACTIVE })
-      .getMany();
-
-    const category = await this.categoryRepo
-      .createQueryBuilder('category')
-      .where('category.user_id = :userId', { userId })
-      .andWhere('category.status = :status', { status: CategoryStatus.ACTIVE })
-      .andWhere('category.deletedAt IS NULL')
-      .orderBy('category.id', 'DESC')
-      .getMany();
+    const [categoryDefault, category] = await Promise.all([
+      this.categoryRepo
+        .createQueryBuilder('category')
+        .where('category.deletedAt IS NULL')
+        .andWhere('category.isDefault = :isDefault', { isDefault: true })
+        .andWhere('category.status = :status', {
+          status: CategoryStatus.ACTIVE,
+        })
+        .getMany(),
+      this.categoryRepo
+        .createQueryBuilder('category')
+        .where('category.user_id = :userId', { userId })
+        .andWhere('category.status = :status', {
+          status: CategoryStatus.ACTIVE,
+        })
+        .andWhere('category.deletedAt IS NULL')
+        .orderBy('category.id', 'DESC')
+        .getMany(),
+    ]);
 
     return categoryDefault.concat(category);
   }

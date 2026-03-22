@@ -32,6 +32,11 @@ export class CreateTransactionDto {
   @ApiProperty()
   @Type(() => Number)
   categoryId: number;
+
+  @IsNumber()
+  @ApiProperty()
+  @Type(() => Number)
+  walletId: number;
 }
 
 export class UpdateTransactionDto extends CreateTransactionDto {

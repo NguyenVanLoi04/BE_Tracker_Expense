@@ -9,6 +9,7 @@ import {
 import { BaseEntity } from '../../common/entities/base.entity';
 import { Category } from '../../category/entities/category.entity';
 import { Transaction } from '../../transaction/entities/transaction.entity';
+import { Wallet } from '../../wallet/entities/wallet.entity';
 
 @Entity({ name: 'users' })
 export class User extends BaseEntity {
@@ -42,4 +43,8 @@ export class User extends BaseEntity {
 
   @OneToMany(() => Category, (category) => category.user)
   categories: Category[];
+
+  // 1 User co nhieu Wallet
+  @OneToMany(() => Wallet, (wallet) => wallet.user)
+  wallets: Wallet[];
 }

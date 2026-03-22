@@ -26,6 +26,7 @@ import { UserModule } from './user/user.module';
 import { AuthModule } from './auth/auth.module';
 import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { TransactionModule } from './transaction/transaction.module';
+import { WalletModule } from './wallet/wallet.module';
 
 @Module({
   imports: [
@@ -41,9 +42,11 @@ import { TransactionModule } from './transaction/transaction.module';
       useFactory: () => ({}),
       dataSourceFactory: async () => {
         try {
-          
-          const ds = addTransactionalDataSource(dataSource);
-          console.log('✅ Database connected successfully');
+          // Fix retry bug: Check if default ds is already added by typeorm-transactional before adding
+          const { getDataSourceByName } = require('typeorm-transactional');
+          const existingDs = getDataSourceByName('default');
+          const ds = existingDs || addTransactionalDataSource(dataSource);
+          console.log('✅ Database initialized successfully');
           return ds;
         } catch (err) {
           console.error('❌ Database connection failed:', err);
@@ -69,6 +72,7 @@ import { TransactionModule } from './transaction/transaction.module';
     UserModule,
     AuthModule,
     TransactionModule,
+    WalletModule,
   ],
   controllers: [AppController],
   providers: [

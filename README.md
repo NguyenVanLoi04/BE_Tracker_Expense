@@ -10,3 +10,7 @@
 ### Husky:
 
 1. Skip husky with command: git commit -n -m '<commit message>'
+
+### Docker: run docker
+
+docker run -d -p 3000:5005 --name be-tracker-expense --env-file .env be-tracker-expense
