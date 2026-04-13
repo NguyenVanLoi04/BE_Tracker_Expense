@@ -23,6 +23,19 @@ export class CategoryCustomerService {
     private UserRepository: UserRepository,
   ) {}
 
+  async getListDefaultCategory() {
+    const categoryDefault = await this.categoryRepo
+      .createQueryBuilder('category')
+      .where('category.deletedAt IS NULL')
+      .andWhere('category.isDefault = :isDefault', { isDefault: true })
+      .andWhere('category.status = :status', {
+        status: CategoryStatus.ACTIVE,
+      })
+      .getMany();
+
+    return categoryDefault;
+  }
+
   async getCategoryCreatedByCustomer(user: UserDto) {
     const { userId } = user;
 

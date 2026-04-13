@@ -8,7 +8,9 @@ import {
   Min,
 } from 'class-validator';
 import { TransactionType } from './../enums/enum';
-import { Type } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { CategoryResDto } from '../../category/dtos/common/res/category.res.dto';
+import { WalletResponseDto } from '../../wallet/dtos/dto';
 import { PaginationReqDto } from '../../common/dtos/pagination.dto';
 import { ApiProperty } from '@nestjs/swagger';
 export class CreateTransactionDto {
@@ -59,4 +61,28 @@ export class GetListTransactionDto extends PaginationReqDto {
   @IsOptional()
   @IsDateString()
   endDate?: string;
+}
+
+export class TransactionResponseDto {
+  @Expose() id: number;
+  @Expose() amount: number;
+  @Expose() note: string;
+  @Expose() type: TransactionType;
+  @Expose() transactionDate: Date;
+  @Expose() createdAt: Date;
+  @Expose() updatedAt: Date;
+
+  @Expose()
+  @Type(() => CategoryResDto)
+  category: CategoryResDto;
+
+  @Expose()
+  @Type(() => WalletResponseDto)
+  wallet: WalletResponseDto;
+
+  @Expose()
+  categoryName?: string;
+
+  @Expose()
+  totalAmount?: number;
 }

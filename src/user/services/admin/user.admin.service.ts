@@ -35,12 +35,9 @@ export class UserAdminService {
     const userFound = await this.userRepository
       .createQueryBuilder('user')
       .where('user.id = :id', { id })
-      .leftJoin('user.categories', 'category')
-      .leftJoin('user.transactions', 'transaction')
-      .addSelect('COUNT(category.user_id)', 'categoryCount')
-      .addSelect('COUNT(transaction.user_id)', 'transactionCount')
-      .groupBy('user.id')
-      .getRawOne();
+      .loadRelationCountAndMap('user.categoryCount', 'user.categories')
+      .loadRelationCountAndMap('user.transactionCount', 'user.transactions')
+      .getOne();
 
     if (!userFound) {
       throw new NotFoundException('User not found');

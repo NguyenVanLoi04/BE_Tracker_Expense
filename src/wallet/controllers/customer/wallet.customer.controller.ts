@@ -17,7 +17,9 @@ import {
   CreateWalletDto,
   TransferWalletDto,
   UpdateWalletDto,
+  WalletResponseDto,
 } from '../../dtos/dto';
+import { Serialize } from '../../../common/interceptors/serialize.interceptor';
 
 @Controller(`${PrefixType.CUSTOMER}/wallets`)
 @ApiTags('Customer wallet')
@@ -25,11 +27,13 @@ export class WalletCustomerController {
   constructor(private readonly walletCustomerService: WalletCustomerService) {}
 
   @Get()
+  @Serialize(WalletResponseDto)
   getListWallet(@CurrentUser() user: UserDto) {
     return this.walletCustomerService.getListWalletByUser(user);
   }
 
   @Get(':id')
+  @Serialize(WalletResponseDto)
   getWalletById(
     @CurrentUser() user: UserDto,
     @Param('id', ParseIntPipe) id: number,
@@ -38,6 +42,7 @@ export class WalletCustomerController {
   }
 
   @Post()
+  @Serialize(WalletResponseDto)
   createWallet(@CurrentUser() user: UserDto, @Body() dto: CreateWalletDto) {
     return this.walletCustomerService.createWallet(user, dto);
   }
@@ -48,6 +53,7 @@ export class WalletCustomerController {
   }
 
   @Put(':id')
+  @Serialize(WalletResponseDto)
   updateWalletById(
     @CurrentUser() user: UserDto,
     @Param('id', ParseIntPipe) id: number,

@@ -23,6 +23,8 @@ import { CategoryAdminService } from '../../services/merchant/category.merchant.
 import { CurrentUser } from '../../../common/decorators/curent.user.decorator';
 import { UserDto } from '../../../auth/dtos/dto';
 import { Admin } from '../../../common/decorators/admin.decorator';
+import { Serialize } from '../../../common/interceptors/serialize.interceptor';
+import { CategoryResDto } from '../../dtos/common/res/category.res.dto';
 
 @Controller(`${PrefixType.ADMIN}/categories`)
 @Admin()
@@ -31,16 +33,19 @@ export class CategoryMerchantController {
   constructor(private readonly categoryAdminService: CategoryAdminService) {}
 
   @Get()
+  @Serialize(CategoryResDto)
   getList(@CurrentUser() id: number, @Query() dto: GetListCategoryAdminReqDto) {
     return this.categoryAdminService.getListCategoryByAdmin(dto);
   }
 
   @Get(':id')
+  @Serialize(CategoryResDto)
   getCategoryByIdWithAdmin(@Param('id', ParseIntPipe) id: number) {
     return this.categoryAdminService.getCategoryById(id);
   }
 
   @Post()
+  @Serialize(CategoryResDto)
   createCategoryWithAdmin(
     @Body() dto: CreateCategoryAdminReqDto,
     @CurrentUser() user: UserDto,
@@ -49,6 +54,7 @@ export class CategoryMerchantController {
   }
 
   @Patch(':id')
+  @Serialize(CategoryResDto)
   updateCategoryWithAdmin(
     @Param('id', ParseIntPipe) id: number,
     @Body() dto: CreateCategoryAdminReqDto,

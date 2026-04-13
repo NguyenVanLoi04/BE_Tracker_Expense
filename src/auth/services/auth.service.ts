@@ -59,12 +59,9 @@ export class AuthService {
     const user = await this.userRepo
       .createQueryBuilder('user')
       .where('user.id = :id', { id })
-      .leftJoin('user.categories', 'category')
-      .leftJoin('category.transactions', 'transaction')
-      .addSelect('COUNT(category.id)', 'categoryCount')
-      .addSelect('COUNT(transaction.id)', 'transactionCount')
-      .groupBy('user.id')
-      .getRawOne();
+      .loadRelationCountAndMap('user.categoryCount', 'user.categories')
+      .loadRelationCountAndMap('user.transactionCount', 'user.transactions')
+      .getOne();
 
     return user;
   }

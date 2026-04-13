@@ -14,7 +14,12 @@ import { PrefixType } from '../../../common/constants/global.constant';
 import { TransactionCustomerService } from '../../services/customer/transaction.customer.service';
 import { CurrentUser } from '../../../common/decorators/curent.user.decorator';
 import { UserDto } from '../../../auth/dtos/dto';
-import { CreateTransactionDto, GetListTransactionDto } from '../../dtos/dto';
+import {
+  CreateTransactionDto,
+  GetListTransactionDto,
+  TransactionResponseDto,
+} from '../../dtos/dto';
+import { Serialize } from '../../../common/interceptors/serialize.interceptor';
 
 @Controller(`${PrefixType.CUSTOMER}/transactions`)
 @ApiTags('Customer transaction')
@@ -24,6 +29,7 @@ export class TransactionCustomerController {
   ) {}
 
   @Get()
+  @Serialize(TransactionResponseDto)
   getListTransaction(
     @CurrentUser() user: UserDto,
     @Query() query: GetListTransactionDto,
@@ -35,6 +41,7 @@ export class TransactionCustomerController {
   }
 
   @Get('history')
+  @Serialize(TransactionResponseDto)
   getTransactionHistory(
     @CurrentUser() user: UserDto,
     @Query() query: GetListTransactionDto,
@@ -43,6 +50,7 @@ export class TransactionCustomerController {
   }
 
   @Get(':id')
+  @Serialize(TransactionResponseDto)
   getTransactionById(
     @CurrentUser() user: UserDto,
     @Param('id', ParseIntPipe) id: number,
@@ -51,6 +59,7 @@ export class TransactionCustomerController {
   }
 
   @Get('information')
+  @Serialize(TransactionResponseDto)
   sumAmountTransactionByUserInMonth(@CurrentUser() user: UserDto) {
     return this.transactionCustomerService.sumAmountTransactionByUserInMonth(
       user,
@@ -58,11 +67,13 @@ export class TransactionCustomerController {
   }
 
   @Get('summary')
+  @Serialize(TransactionResponseDto)
   summaryTransactionByUserInTime(@CurrentUser() user: UserDto) {
     return this.transactionCustomerService.summaryTransactionByUserInTime(user);
   }
 
   @Post()
+  @Serialize(TransactionResponseDto)
   createTransaction(
     @CurrentUser() user: UserDto,
     @Body() dto: CreateTransactionDto,
@@ -71,6 +82,7 @@ export class TransactionCustomerController {
   }
 
   @Put(':id')
+  @Serialize(TransactionResponseDto)
   updateTransactionById(
     @CurrentUser() user: UserDto,
     @Param('id', ParseIntPipe) id: number,

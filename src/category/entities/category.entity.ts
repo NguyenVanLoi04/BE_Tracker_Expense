@@ -19,6 +19,15 @@ export class Category extends BaseEntity {
   @Column({ length: 255 })
   name: string;
 
+  @Column({ length: 255 })
+  type: string;
+
+  @Column({ length: 255 })
+  color: string;
+
+  @Column({ length: 255 })
+  icon: string;
+
   @Column({ nullable: true })
   priority: number;
 

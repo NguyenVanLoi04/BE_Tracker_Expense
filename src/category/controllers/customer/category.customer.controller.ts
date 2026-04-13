@@ -17,6 +17,8 @@ import {
   CreateCategoryReqDto,
   UpdateCategoryMerchantReqDto,
 } from '../../dtos/merchant/req/category.merchant.req.dto';
+import { Serialize } from '../../../common/interceptors/serialize.interceptor';
+import { CategoryResDto } from '../../dtos/common/res/category.res.dto';
 @Controller(`${PrefixType.CUSTOMER}/category`)
 @ApiTags('Category Customer')
 export class CategoryCustomerController {
@@ -24,12 +26,20 @@ export class CategoryCustomerController {
     private readonly CategoryCustomerService: CategoryCustomerService,
   ) {}
 
+  @Get('default')
+  @Serialize(CategoryResDto)
+  getListDefaultCategory() {
+    return this.CategoryCustomerService.getListDefaultCategory();
+  }
+
   @Get()
+  @Serialize(CategoryResDto)
   getCategoryCreatedByCustomer(@CurrentUser() user: UserDto) {
     return this.CategoryCustomerService.getCategoryCreatedByCustomer(user);
   }
 
   @Post()
+  @Serialize(CategoryResDto)
   createCategoryByCustomer(
     @CurrentUser() user: UserDto,
     @Body() dto: CreateCategoryReqDto,
@@ -38,6 +48,7 @@ export class CategoryCustomerController {
   }
 
   @Put(':id')
+  @Serialize(CategoryResDto)
   updateCategoryByCustomer(
     @Param('id', ParseIntPipe) id: number,
     @CurrentUser() user: UserDto,

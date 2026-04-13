@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEnum, IsNumber, IsOptional, IsString, Min } from 'class-validator';
+import { Expose } from 'class-transformer';
 import { WalletType } from '../enums/wallet.enum';
 
 export class CreateWalletDto {
@@ -32,4 +33,14 @@ export class TransferWalletDto {
   @Min(1)
   @ApiProperty()
   amount: number;
+}
+
+export class WalletResponseDto {
+  @Expose() id: number;
+  @Expose() name: string;
+  @Expose() type: WalletType;
+  @Expose() balance: number;
+  @Expose() status: string;
+  @Expose() createdAt: Date;
+  @Expose() updatedAt: Date;
 }

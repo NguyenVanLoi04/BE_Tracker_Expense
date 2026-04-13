@@ -1,5 +1,6 @@
 import { BaseResponseDtoParams } from '../../../../common/dtos/base.res';
 import { Category } from '../../../entities/category.entity';
+import { Expose } from 'class-transformer';
 import { CategoryStatus } from '../../../enums/category.enum';
 
 export interface CategoryResDtoParams extends BaseResponseDtoParams {
@@ -7,10 +8,10 @@ export interface CategoryResDtoParams extends BaseResponseDtoParams {
 }
 
 export class CategoryResDto {
-  id: number;
-  name: string;
-  priority: number;
-  status: CategoryStatus;
+  @Expose() id: number;
+  @Expose() name: string;
+  @Expose() priority: number;
+  @Expose() status: CategoryStatus;
 
   static mapProperty(dto: CategoryResDto, data: Category) {
     dto.id = data.id;

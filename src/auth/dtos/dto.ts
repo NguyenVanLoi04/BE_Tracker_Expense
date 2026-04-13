@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
+import { Expose } from 'class-transformer';
 
 export class LoginDto {
   @ApiProperty({
@@ -30,4 +31,30 @@ export class RegisterDto {
 export class UserDto {
   userId: number;
   userName: string;
+}
+
+export class UserProfileDto {
+  @Expose()
+  id: number;
+
+  @Expose()
+  name: string;
+
+  @Expose()
+  userName: string;
+
+  @Expose()
+  isAdmin: boolean;
+
+  @Expose()
+  createdAt: Date;
+
+  @Expose()
+  updatedAt: Date;
+
+  @Expose()
+  categoryCount: number;
+
+  @Expose()
+  transactionCount: number;
 }

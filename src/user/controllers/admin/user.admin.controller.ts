@@ -11,7 +11,8 @@ import {
 import { ApiTags } from '@nestjs/swagger';
 import { PrefixType } from '../../../common/constants/global.constant';
 import { UserAdminService } from '../../services/admin/user.admin.service';
-import { GetListUserDto } from '../../dtos/dto';
+import { GetListUserDto, UserResponseDto } from '../../dtos/dto';
+import { Serialize } from '../../../common/interceptors/serialize.interceptor';
 import { Public } from '../../../common/decorators/public.decorator';
 import { Admin } from '../../../common/decorators/admin.decorator';
 
@@ -23,12 +24,14 @@ export class UserAdminController {
 
   @Public()
   @Get(':id')
+  @Serialize(UserResponseDto)
   getUserById(@Param('id', ParseIntPipe) id: number) {
     return this.userAdminService.getUserById(id);
   }
 
   @Public()
   @Get()
+  @Serialize(UserResponseDto)
   getListUser(@Query() params: GetListUserDto) {
     return this.userAdminService.getListUser(params);
   }
