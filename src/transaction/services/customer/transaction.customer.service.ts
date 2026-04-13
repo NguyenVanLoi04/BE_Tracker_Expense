@@ -127,7 +127,7 @@ export class TransactionCustomerService {
     }
 
     const categoryFound = await this.categoryRepo.findOne({
-      where: { id: categoryId, user: { id: userId } },
+      where: { id: categoryId },
     });
     if (!categoryFound) {
       throw new NotFoundException('Category not found');
