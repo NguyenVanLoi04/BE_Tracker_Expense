@@ -9,7 +9,6 @@ import { TransactionCustomerService } from './services/customer/transaction.cust
 import { CategoryRepository } from '../category/repositories/category.repository';
 import { TransactionRepository } from './repositories/transaction.repository';
 import { TransactionAdminService } from './services/admin/transaction.admin.service';
-import { WalletRepository } from '../wallet/repositories/wallet.repository';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Transaction])],
@@ -20,7 +19,6 @@ import { WalletRepository } from '../wallet/repositories/wallet.repository';
     UserRepository,
     CategoryRepository,
     TransactionRepository,
-    WalletRepository,
   ],
   exports: [
     TransactionAdminService,
@@ -28,7 +26,6 @@ import { WalletRepository } from '../wallet/repositories/wallet.repository';
     UserRepository,
     CategoryRepository,
     TransactionRepository,
-    WalletRepository,
   ],
 })
 export class TransactionModule {}

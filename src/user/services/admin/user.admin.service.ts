@@ -3,6 +3,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { Transactional } from 'typeorm-transactional';
 import { UserRepository } from '../../repositories/user.repository';
 import { GetListUserDto } from '../../dtos/dto';
 import { paginate } from 'nestjs-typeorm-paginate';
@@ -46,6 +47,7 @@ export class UserAdminService {
     return userFound;
   }
 
+  @Transactional()
   async deleteUserById(id: number) {
     const userFound = await this.userRepository.findOne({ where: { id } });
     if (!userFound) {
@@ -59,6 +61,7 @@ export class UserAdminService {
     }
   }
 
+  @Transactional()
   async blockUserById(id: number, isBlock: boolean) {
     const userFound = await this.userRepository.findOne({ where: { id } });
     if (!userFound) {

@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { UserRepository } from '../../user/repositories/user.repository';
 import { LoginDto, RegisterDto } from '../dtos/dto';
+import { Transactional } from 'typeorm-transactional';
 
 @Injectable()
 export class AuthService {
@@ -35,6 +36,7 @@ export class AuthService {
     };
   }
 
+  @Transactional()
   async register(dto: RegisterDto) {
     const { userName, passWord, name } = dto;
 

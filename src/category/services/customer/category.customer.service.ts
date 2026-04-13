@@ -3,6 +3,7 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
+import { Transactional } from 'typeorm-transactional';
 import { paginate } from 'nestjs-typeorm-paginate';
 import { AppResponseDto } from '../../../common/dtos/app-response.dto';
 import { CategoryResDto } from '../../dtos/common/res/category.res.dto';
@@ -62,6 +63,7 @@ export class CategoryCustomerService {
     return categoryDefault.concat(category);
   }
 
+  @Transactional()
   async createCategoryByCustomer(user: UserDto, dto: CreateCategoryReqDto) {
     const { userId } = user;
     const { name, priority, isDefault, status } = dto;
@@ -84,6 +86,7 @@ export class CategoryCustomerService {
     return this.categoryRepo.save(category);
   }
 
+  @Transactional()
   async updateCategoryByCustomer(
     id: number,
     user: UserDto,
@@ -110,6 +113,7 @@ export class CategoryCustomerService {
     }
   }
 
+  @Transactional()
   async deleteCategoryByCustomer(categoryId: number, user: UserDto) {
     const { userId } = user;
 

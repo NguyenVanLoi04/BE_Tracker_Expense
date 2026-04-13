@@ -4,6 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
+import { Transactional } from 'typeorm-transactional';
 
 import { CategoryRepository } from '../../repositories/category.repository';
 import { CategoryCommonService } from '../common/category.common.service';
@@ -65,6 +66,7 @@ export class CategoryAdminService {
     return category;
   }
 
+  @Transactional()
   async deleteCategoryById(id: number) {
     const categoryCanDelete = await this.checkCategoryCanBeDeleted(id);
 
@@ -74,6 +76,7 @@ export class CategoryAdminService {
     return this.categoryRepo.softDelete(id);
   }
 
+  @Transactional()
   async createCategoryByAdmin(user: UserDto, dto: CreateCategoryAdminReqDto) {
     const { name, priority, isDefault, status } = dto;
     const userFound = await this.userRepository.findOneBy({ id: user.userId });
@@ -101,6 +104,7 @@ export class CategoryAdminService {
     return this.categoryRepo.save(category);
   }
 
+  @Transactional()
   async updateCategoryByAdmin(
     id: number,
     user: UserDto,

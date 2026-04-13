@@ -62,7 +62,7 @@ export class WalletCustomerService {
       name,
       type,
       balance,
-      user: userFound,
+      // user: userFound,
     });
 
     return this.walletRepo.save(newWallet);
@@ -119,7 +119,7 @@ export class WalletCustomerService {
     const fromWallet = await this.walletRepo.findOne({
       where: {
         id: fromWalletId,
-        user: { id: userId },
+        // user: { id: userId },
         status: WalletStatus.ACTIVE,
       },
     });
@@ -127,7 +127,7 @@ export class WalletCustomerService {
     const toWallet = await this.walletRepo.findOne({
       where: {
         id: toWalletId,
-        user: { id: userId },
+        // user: { id: userId },
         status: WalletStatus.ACTIVE,
       },
     });

@@ -36,15 +36,19 @@ export class Wallet extends BaseEntity {
   })
   status: WalletStatus;
 
+  /*
   // 1 Wallet belongs to 1 User
-  @ManyToOne(() => User, (user) => user.wallets, {
+  @ManyToOne(() => User, (user) => (user as any).wallets, {
     nullable: false,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'user_id' })
   user: User;
+  */
 
+  /*
   // 1 Wallet has many Transactions
-  @OneToMany(() => Transaction, (transaction) => transaction.wallet)
+  @OneToMany(() => Transaction, (transaction) => (transaction as any).wallet)
   transactions: Transaction[];
+  */
 }

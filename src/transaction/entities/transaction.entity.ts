@@ -8,7 +8,7 @@ import {
 import { BaseEntity } from '../../common/entities/base.entity';
 import { Category } from '../../category/entities/category.entity';
 import { User } from '../../user/entities/user.entity';
-import { Wallet } from '../../wallet/entities/wallet.entity';
+// import { Wallet } from '../../wallet/entities/wallet.entity';
 import { TransactionType } from '../enums/enum';
 
 @Entity({ name: 'transactions' })
@@ -47,6 +47,7 @@ export class Transaction extends BaseEntity {
   @JoinColumn({ name: 'category_id' })
   category: Category;
 
+  /*
   // N Transaction belongs to 1 Wallet
   @ManyToOne(() => Wallet, (wallet) => wallet.transactions, {
     nullable: true,
@@ -54,4 +55,5 @@ export class Transaction extends BaseEntity {
   })
   @JoinColumn({ name: 'wallet_id' })
   wallet: Wallet;
+  */
 }
