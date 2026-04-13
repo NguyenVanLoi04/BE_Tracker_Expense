@@ -110,7 +110,7 @@ export class TransactionCustomerService {
   @Transactional()
   async createTransaction(user: UserDto, dto: CreateTransactionDto) {
     const { userId } = user;
-    const { amount, note, type, transactionDate, categoryId } = dto;
+    const { amount, note, type, categoryId } = dto;
     const numAmount = Number(amount);
 
     if (type === TransactionType.INCOME && numAmount <= 0) {
@@ -137,7 +137,7 @@ export class TransactionCustomerService {
       amount: numAmount,
       note,
       type,
-      transactionDate,
+      transactionDate: new Date(),
       user: userFound,
       category: categoryFound,
     });
