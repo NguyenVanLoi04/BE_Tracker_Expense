@@ -30,10 +30,15 @@ export class SerializeInterceptor implements NestInterceptor {
   ): Observable<any> | Promise<Observable<any>> {
     return next.handle().pipe(
       map((data: any) => {
-        if (data && Array.isArray(data.items) && data.meta) {
+        if (
+          data &&
+          (Array.isArray(data.items) || Array.isArray(data.data)) &&
+          (data.meta || data.pagination)
+        ) {
+          const itemsKey = Array.isArray(data.items) ? 'items' : 'data';
           return {
             ...data,
-            items: plainToInstance(this.dto, data.items, {
+            [itemsKey]: plainToInstance(this.dto, data[itemsKey], {
               excludeExtraneousValues: true,
             }),
           };

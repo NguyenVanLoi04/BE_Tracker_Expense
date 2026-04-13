@@ -66,10 +66,15 @@ export class TransactionCustomerService {
     const queryBuilder = this.createBaseTransactionQuery(user.userId, query);
 
     const result = await paginate(queryBuilder, { page, limit });
-
+    console.log(result);
     return {
       data: result.items,
-      meta: result.meta,
+      pagination: {
+        limit,
+        page,
+        totalItems: result.meta.totalItems,
+        totalPages: result.meta.totalPages,
+      },
     };
   }
 
